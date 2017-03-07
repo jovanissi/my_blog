@@ -1,0 +1,34 @@
+{% extends "header.html" %}
+{% block content %}
+
+{% load staticfiles%}
+	
+	<form method="POST" role="form" id="comments_box">{% csrf_token %}
+		{{ form.as_p }}
+		<button type="submit">post comment</button>
+		<!-- <div class="form-group" id="comments_name">
+			<label for="name">Add comment</label>
+			<input type="text" class="form-control" id="name" placeholder="Enter Name">
+		</div>
+		<div class="form-group" id="comments_content">								
+			<textarea class="form-control" rows="7" placeholder="Comment..."></textarea>
+			<button type="submit" class="btn btn-primary" id="comments_button">Add comment</button>
+		</div> -->
+
+	</form>
+
+{% endblock %}
+
+
+
+
+$("#comments_button").click(function(event){
+	event.preventDefault();
+	var $form = $( this ),
+		url = $form.attr('post');
+
+	var posting = $.post(url, {article_id: ("#article_id_form_catcher").val(), user_name: ("#name").val(), comment: ("#comment_text").val()});
+	posting.done(function(data){
+		alert('Thank you for your comment!!!')
+	});
+});

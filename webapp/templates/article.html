@@ -1,0 +1,123 @@
+{% extends "header.html" %}
+
+{% load staticfiles %}
+{% block content %}
+
+	<div class="container-fluid">
+		<header id="header">TheBlog</header>
+
+				<!-- This is the navigation bar with search -->
+
+		<nav class="project-filter clearfix text-center wow fadeInLeft" role="navigation" id="navbar">
+	    	<div>
+	    		<ul class="nav navbar-nav" id="navbar_list">
+	    			<li id="dropdowns">
+	    				<a href="home" class="filter" data-filter="Tech">Home</a>
+	    			</li>
+	    			<li id="dropdowns">
+	    				<a href="tech" class="filter" data-filter="Tech">Tech</a>
+	    			</li>
+	    			<li id="dropdowns">
+	    				<a href="science" class="filter" data-filter=".Science">Science</a>
+	    			</li>
+	    			<li id="dropdowns">
+	    				<a href="social" class="filter" data-filter=".Social">Social</a>
+	    			</li>
+	    		</ul>
+	    	</div>
+	    	<div>
+	    		<form class="navbar-form navbar-left pull-right" role="search">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Search" >
+					</div>
+					<button type="submit" class="btn btn-default">Search</button>
+				</form>
+	    	</div>
+	    </nav>
+
+		<article id="article2">
+
+		    	<!-- This is the article content in full -->
+
+		    	<div class="article_title2">
+		    		<ul id="article_path2">
+				   		<li><a href="0{{ homepage.id }}">{{ view_article.classifications }}</a></li>
+				    </ul>
+			    	<img src="{{ view_article.article_img.url }}" alt="image" id="image2">
+			    	<div id="whole_article">
+				    	
+				    	<h2 id="the_title2">
+				    		<a href="">{{ view_article.title }}</a>
+				    	</h2>
+				    </div>
+				    	<div id="para">
+							<p>
+								{{ view_article.body |safe }}
+							</p>
+							<div id="author">
+								<p>{{ view_article.author_name }}</p>
+							</div>
+							<div id="like_buttons">
+								<form id="like">  {% csrf_token %}
+									<input id="article_pk" name="article_pk" type="hidden" value="{{view_article.pk}}">
+									<input id="likes" value="Like" data-id="{{view_article.pk}}" type="submit" class="btn btn-success">
+								</form>
+								<form id="dislike"> {% csrf_token %}
+									<input id="article_pk" name="article_pk" type="hidden" value="{{view_article.pk}}">
+									<input id="dislike" type="submit" value="Dislike" class="btn btn-danger">
+								</form>
+							</div>
+							<div class="date_and_comments2">
+							<p> 
+								<ul id="date_and_comments2">
+									<li>{{ view_article.pub_date }}</li>
+									<li>{{ comments_number }} comments</li>
+									<li>{% if view_article.likes > 0 %}{{ view_article.likes}} {% endif %} likes</a></li>
+									<li>{% if view_article.dislikes > 0 %}{{ view_article.dislikes}} {% endif %} dislikes</a></li>
+								</ul>
+							</p>
+						</div>
+
+				<!-- Where you can post your comment -->
+
+						<form method="POST" action="post" role="form" id="comments_box"> {% csrf_token %}
+							<input type="hidden" class="form-control" id="article_id_form_catcher" name="article_id" value="{{ view_article.pk }}" size="50">
+							<div class="form-group" id="comments_name">
+								<label for="name">Add comment</label>
+								<input type="text" class="form-control" id="name" name="user_name" placeholder="Enter Name" required>
+							</div>
+							<div class="form-group" id="comments_content">
+								
+								<textarea type="text" id="comment_text" class="form-control" rows="7" name="comment" placeholder="Comment..." required></textarea>
+								<button type="submit" class="btn btn-primary" id="comments_button">Add comment</button>
+							</div>
+
+						</form>
+						
+				<!-- Posted comments on the article -->
+
+						<section id='comment_section'>
+						{% for comment in comments %}
+							<h4 id='comment_author_name'>{{ comment.user_name}}:</h4>
+							<p id='created_comment'>{{ comment.comment }}</p>
+							<p >
+								<ul id='created_date'>
+									<li>{{ comment.comment_date }}</li>
+								</ul>
+							</p>
+						
+						{% endfor %}
+						</section>
+					</div>
+				</div>
+
+		</article>
+		
+	</div>
+
+	
+{% endblock %}
+{% block script %}
+   <script type="text/javascript" src="{% static 'js/reload.js' %}"></script>
+   <script type="text/javascript" src="{% static 'js/likes_and_dislikes.js' %}"></script>
+{% endblock %}
