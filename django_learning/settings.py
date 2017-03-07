@@ -32,8 +32,6 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'webapp',
-    # 'whoosh',
-    # 'haystack',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -83,18 +81,6 @@ DATABASES = {
     }
 }
 
-# WHOOSH_INDEX = os.path.join(PROJECT_DIRECTORY,'whoosh/')
-
-# HAYSTACK_CONNECTIONS = {
-#     'default':{
-#         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-#         'PATH': WHOOSH_INDEX,
-#     }, 
-# }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
