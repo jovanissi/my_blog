@@ -1,1 +1,1 @@
-## This is my django based blog
+## This is a django based blog
